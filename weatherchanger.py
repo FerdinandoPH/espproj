@@ -1,6 +1,4 @@
 import requests,json,time
-# Read from GET https://api.openweathermap.org/data/2.5/forecast?lat=40.488097&lon=-3.343781&appid=4a9f0193f2c492fb37368cbf04b93485, take the value pop of the next day at 12:00 and return it
-
 def get_weather(datos=False):
     url="https://api.openweathermap.org/data/2.5/forecast?lat=40.488097&lon=-3.343781&appid=4a9f0193f2c492fb37368cbf04b93485"
     response=requests.get(url)
@@ -14,14 +12,11 @@ def get_weather(datos=False):
         print(data)
         print("\n\n")
         print(data["list"][hourIndex])
-    #Get the probability of rain for the next day at 12:00. The data is in 3 hour intervals, so determine the index of the next day at 12:00
-    #The data is in 3 hour intervals, so determine the index of the next day at 12:00
 
 
     pop=data["list"][hourIndex]["pop"]
     
     print(pop)
-    #Now send pop to GET https://api.thingspeak.com/update?api_key=E883ZKIT1R3NIRMV&field1=0
     url="https://api.thingspeak.com/update?api_key=E883ZKIT1R3NIRMV&field1="+str(pop)
     response=requests.get(url)
     if response.status_code==200:
